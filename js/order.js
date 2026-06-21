@@ -5,12 +5,9 @@ let paymentMethod = 'card';
 // Handle Delivery Selection UI
 function selectDelivery(method) {
     deliveryMethod = method;
-    
-    // Update UI classes
     document.getElementById('pickupOption').classList.toggle('selected', method === 'pickup');
     document.getElementById('deliveryOption').classList.toggle('selected', method === 'delivery');
     
-    // Toggle Address/Time fields
     const addrField = document.getElementById('deliveryAddress');
     const timeField = document.getElementById('pickupTime');
     
@@ -33,6 +30,32 @@ function selectPayment(method) {
     document.getElementById('digitalPayment').classList.toggle('selected', method === 'digital');
 }
 
+// Cart Helpers
+function getCartTotal() {
+    const cart = JSON.parse(localStorage.getItem('lidiyaCart')) || [];
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+}
+
+function getFormattedOrderText() {
+    if (window.currentOrderData) {
+        const d = window.currentOrderData;
+        let text = `*New Order from Lidiya Cafe*%0A`;
+        text += `Name: ${d.name}%0A`;
+        text += `Phone: ${d.phone}%0A`;
+        text += `Type: ${d.type === 'delivery' ? 'Delivery' : 'Pickup'}%0A`;
+        if (d.type === 'delivery') text += `Address: ${d.address}%0A`;
+        text += `Payment: ${d.payment}%0A%0A`;
+        text += `*Order Details:*%0A`;
+        d.items.forEach(item => {
+            text += `- ${item.quantity}x ${item.name} (${item.price} ETB)%0A`;
+        });
+        text += `%0A*Total: ${d.total} ETB*`;
+        if (d.notes) text += `%0ANotes: ${d.notes}`;
+        return text;
+    }
+    return "New order from Lidiya Cafe!";
+}
+
 // Main Order Submission Handler
 function handleOrderSubmit(event) {
     event.preventDefault();
@@ -43,7 +66,6 @@ function handleOrderSubmit(event) {
         return;
     }
 
-    // Gather all data into a single object
     window.currentOrderData = {
         name: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
         phone: document.getElementById('phone').value,
@@ -52,83 +74,97 @@ function handleOrderSubmit(event) {
         payment: paymentMethod,
         notes: document.getElementById('notes').value,
         items: cart,
-        total: getCartTotal() + (deliveryMethod === 'delivery' ? 3.99 : 0),
+        total: getCartTotal() + (deliveryMethod === 'delivery' ? 50 : 0), // Delivery fee in ETB
         type: deliveryMethod
     };
 
-    // Show the custom Glass Modal instead of browser alert
-    const modal = document.getElementById('orderModal');
-    if (modal) {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Stop background scrolling
+    if (paymentMethod === 'digital') {
+        payWithChapa(window.currentOrderData);
+    } else {
+        // Save the receipt text to memory
+        localStorage.setItem('lidiyaPendingMessage', getFormattedOrderText());
+        // Bypass the modal and instantly trigger the SMS for Cash/Pickup
+        sendSMS();
     }
 }
 
-// Helper: Format text for WhatsApp (with bolding)
-function getFormattedOrderText() {
-    if (!window.currentOrderData) return '';
-    const o = window.currentOrderData;
+// Connect to Codespaces backend
+async function payWithChapa(orderData) {
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
     
-    let text = `*NEW ORDER - LIDIYA CAFE* %0A`;
-    text += `---------------------------%0A`;
-    text += `*Customer:* ${o.name}%0A`;
-    text += `*Phone:* ${o.phone}%0A`;
-    text += `*Type:* ${o.type.toUpperCase()}%0A`;
-    if (o.type === 'delivery') text += `*Address:* ${o.address}%0A`;
-    text += `*Payment:* ${o.payment.toUpperCase()}%0A`;
-    if (o.notes) text += `*Notes:* ${o.notes}%0A`;
-    text += `---------------------------%0A`;
-    text += `*ORDER ITEMS:*%0A`;
-    
-    o.items.forEach(item => {
-        text += `- ${item.quantity}x ${item.name} ($${(item.price * item.quantity).toFixed(2)})%0A`;
-    });
-    
-    text += `---------------------------%0A`;
-    text += `*TOTAL AMOUNT: $${o.total.toFixed(2)}*`;
-    return text;
+    try {
+        submitBtn.textContent = 'Connecting to Chapa...';
+        submitBtn.disabled = true;
+
+        const nameParts = orderData.name.split(' ');
+
+        const response = await fetch('https://effective-rotary-phone-qv7rq9r4p7pj3xqq4-3000.app.github.dev/api/initialize-payment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                amount: orderData.total,
+                email: orderData.email,
+                first_name: nameParts[0] || 'Customer',
+                last_name: nameParts.slice(1).join(' ') || 'Name'
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.checkout_url) {
+            // Save the receipt text to memory before leaving the page
+            localStorage.setItem('lidiyaPendingMessage', getFormattedOrderText());
+            
+            localStorage.removeItem('lidiyaCart');
+            window.location.href = data.checkout_url;
+        } else {
+            throw new Error('No checkout URL received');
+        }
+
+    } catch (error) {
+        console.error('Payment Error:', error);
+        alert('Could not connect to the payment gateway.');
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
 }
 
-// Action: Send via WhatsApp
-function sendWhatsApp() {
-    // ️ REPLACE THIS WITH YOUR ACTUAL BUSINESS NUMBER
-    // Format: CountryCode + Number (No + sign, no dashes)
-    // Example: 15551234567
-    const phoneNumber = "15550000000"; 
-    
-    const text = getFormattedOrderText();
-    const url = `https://wa.me/${phoneNumber}?text=${text}`;
-    
-    window.open(url, '_blank');
-    finalizeOrderProcess();
-}
-
-// Action: Send via SMS/Messages
+// Action: Automatically Send via SMS
 function sendSMS() {
-    // Clean text for SMS (remove markdown asterisks)
-    const rawText = getFormattedOrderText().replace(/%0A/g, '\n').replace(/\*/g, '');
+    const phoneNumber = "0983064449"; // Your specific number
+    const baseText = localStorage.getItem('lidiyaPendingMessage') || getFormattedOrderText();
     
-    // Universal SMS scheme
-    window.location.href = `sms:?body=${encodeURIComponent(rawText)}`;
+    // Clean up the text format for standard SMS
+    const rawText = baseText.replace(/%0A/g, '\n').replace(/\*/g, '');
+    
+    // Trigger the SMS app with the number and message
+    window.location.href = `sms:${phoneNumber}?body=${encodeURIComponent(rawText)}`;
+    
     finalizeOrderProcess();
 }
 
 // Cleanup & Redirect
 function finalizeOrderProcess() {
     localStorage.removeItem('lidiyaCart');
-    closeOrderModal();
+    localStorage.removeItem('lidiyaPendingMessage');
     
-    // Small delay to allow app to open before redirecting
+    // Increased delay slightly to give the phone time to switch to the SMS app
     setTimeout(() => {
         window.location.href = 'index.html';
-    }, 800);
+    }, 1500);
 }
 
-// Close Modal Logic
-function closeOrderModal() {
-    const modal = document.getElementById('orderModal');
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+// Catch successful returns from Chapa to trigger the SMS automatically
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('status') === 'success') {
+        // Wait just a brief moment to ensure the page has loaded, then fire SMS
+        setTimeout(() => {
+            sendSMS();
+        }, 500);
     }
-}
+});
