@@ -99,7 +99,7 @@ async function payWithChapa(orderData) {
 
         const nameParts = orderData.name.split(' ');
 
-        const response = await fetch('https://effective-rotary-phone-qv7rq9r4p7pj3xqq4-3000.app.github.dev/api/initialize-payment', {
+        const response = await fetch('https://lidiya-payment-server.onrender.com/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
