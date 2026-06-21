@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lidiya Cafe - About Us</title>
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="container">
+            <div class="navbar">
+                <a href="index.html" class="logo">☕ Lidiya Cafe</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="order.html">Order</a></li>
+                </ul>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Hero -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>Our Story</h1>
+            <p style="font-size: 20px; color: var(--text-light); max-width: 800px; margin: 0 auto;">Founded with passion and dedication, Lidiya Cafe has been serving our community with love, quality, and exceptional taste since 2020.</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="section">
+        <div class="container">
+            <div class="about-content">
+                <div>
+                    <h2 style="color: var(--coffee-brown); margin-bottom: 20px;">A Journey of Flavor</h2>
+                    <p style="margin-bottom: 15px;">What started as a small dream has grown into a beloved community gathering place. At Lidiya Cafe, we believe that great food and beverages have the power to bring people together and create lasting memories.</p>
+                    <p style="margin-bottom: 15px;">Our team of skilled baristas and chefs work tirelessly to craft each item with care, using only the finest ingredients sourced from local suppliers whenever possible.</p>
+                    <p>Whether you're here for your morning coffee, a quick lunch, or to enjoy a leisurely dinner with friends, we're committed to making every visit special.</p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&h=400&fit=crop" alt="Cafe Interior" class="about-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section" style="background: rgba(255, 255, 255, 0.2);">
+        <div class="container">
+            <h2 class="text-center mb-40" style="color: var(--coffee-dark); font-size: 36px;">Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card glass-card">
+                    <div class="feature-icon">❤️</div>
+                    <h3>Quality First</h3>
+                    <p>We never compromise on the quality of our ingredients or the care we put into every dish.</p>
+                </div>
+                <div class="value-card glass-card">
+                    <div class="feature-icon">🌱</div>
+                    <h3>Sustainability</h3>
+                    <p>Committed to eco-friendly practices and supporting local, sustainable suppliers.</p>
+                </div>
+                <div class="value-card glass-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Community</h3>
+                    <p>Building connections and creating a welcoming space for everyone in our neighborhood.</p>
+                </div>
+                <div class="value-card glass-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Innovation</h3>
+                    <p>Constantly exploring new flavors and techniques to delight our customers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center mb-40" style="color: var(--coffee-dark); font-size: 36px;">Meet Our Team</h2>
+            <div class="features-grid">
+                <div class="feature-card glass-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop" alt="Team Member" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
+                    <h3>Alex Johnson</h3>
+                    <p style="color: var(--coffee-brown); font-weight: 600;">Head Barista</p>
+                    <p>Coffee enthusiast with 10+ years of experience crafting the perfect brew.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop" alt="Team Member" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
+                    <h3>Maria Garcia</h3>
+                    <p style="color: var(--coffee-brown); font-weight: 600;">Executive Chef</p>
+                    <p>Culinary artist passionate about creating memorable dining experiences.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop" alt="Team Member" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
+                    <h3>David Chen</h3>
+                    <p style="color: var(--coffee-brown); font-weight: 600;">Pastry Chef</p>
+                    <p>Master baker who brings joy through freshly baked goods every day.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="text-align: center; color: var(--text-light); padding: 40px;">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <a href="order.html" class="glass-button primary" style="width: 100%; display: block; text-align: center; text-decoration: none;">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lidiya Cafe</h3>
+                    <p>Serving happiness one cup at a time since 2020.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📱</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li>📍 123 Coffee Street, City</li>
+                        <li>📞 (555) 123-4567</li>
+                        <li>✉️ info@lidiyacafe.com</li>
+                        <li>🕐 Mon-Sun: 7AM - 9PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lidiya Cafe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

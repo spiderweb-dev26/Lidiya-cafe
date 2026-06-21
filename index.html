@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lidiya Cafe - Home</title>
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="container">
+            <div class="navbar">
+                <a href="index.html" class="logo">☕ Lidiya Cafe</a>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="order.html">Order</a></li>
+                </ul>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content glass-card" style="padding: 60px; max-width: 800px;">
+            <h1>Welcome to Lidiya Cafe</h1>
+            <p>Where every cup tells a story and every bite brings joy. Experience the perfect blend of coffee, pastries, and delicious meals in a warm, inviting atmosphere.</p>
+            <div class="hero-buttons">
+                <a href="menu.html" class="glass-button primary">View Menu</a>
+                <a href="order.html" class="glass-button">Order Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center mb-40" style="color: var(--coffee-dark); font-size: 36px;">Why Choose Us?</h2>
+            <div class="features-grid">
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">☕</div>
+                    <h3>Premium Coffee</h3>
+                    <p>Hand-selected beans roasted to perfection for the ultimate coffee experience.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">🥐</div>
+                    <h3>Fresh Pastries</h3>
+                    <p>Baked daily with love using traditional recipes and finest ingredients.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">🍕</div>
+                    <h3>Gourmet Pizza</h3>
+                    <p>Wood-fired pizzas with fresh toppings and authentic Italian flavors.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Quick and reliable delivery service right to your doorstep.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Items -->
+    <section class="section" style="background: rgba(255, 255, 255, 0.2);">
+        <div class="container">
+            <h2 class="text-center mb-40" style="color: var(--coffee-dark); font-size: 36px;">Featured Items</h2>
+            <div class="menu-grid" id="featuredItems"></div>
+            <div class="text-center mt-40">
+                <a href="menu.html" class="glass-button primary">View Full Menu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="text-align: center; color: var(--text-light); padding: 40px;">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <a href="order.html" class="glass-button primary" style="width: 100%; display: block; text-align: center; text-decoration: none;">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lidiya Cafe</h3>
+                    <p>Serving happiness one cup at a time since 2020.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📱</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li>📍 123 Coffee Street, City</li>
+                        <li>📞 (555) 123-4567</li>
+                        <li>✉️ info@lidiyacafe.com</li>
+                        <li>🕐 Mon-Sun: 7AM - 9PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lidiya Cafe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

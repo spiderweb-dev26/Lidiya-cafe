@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lidiya Cafe - Order Online</title>
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="container">
+            <div class="navbar">
+                <a href="index.html" class="logo">☕ Lidiya Cafe</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="order.html" class="active">Order</a></li>
+                </ul>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Order Section -->
+    <section class="section">
+        <div class="container">
+            <h1 class="text-center mb-40" style="color: var(--coffee-dark); font-size: 48px;">Place Your Order</h1>
+            
+            <div class="order-section">
+                <!-- Cart Summary -->
+                <div class="glass-card mb-40" style="padding: 30px;">
+                    <h2 style="color: var(--coffee-brown); margin-bottom: 20px;">Order Summary</h2>
+                    <div id="orderSummary">
+                        <p style="color: var(--text-light);">Loading your cart...</p>
+                    </div>
+                    <div style="border-top: 1px solid var(--glass-border); margin-top: 20px; padding-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 24px; font-weight: bold; color: var(--coffee-brown);">
+                            <span>Total:</span>
+                            <span id="orderTotal">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Options -->
+                <div class="glass-card mb-40" style="padding: 30px;">
+                    <h2 style="color: var(--coffee-brown); margin-bottom: 20px;">Delivery Method</h2>
+                    <div class="delivery-options">
+                        <div class="delivery-option glass-card selected" id="pickupOption" onclick="selectDelivery('pickup')">
+                            <div class="feature-icon">🏪</div>
+                            <h3>Pickup</h3>
+                            <p>Ready in 15-20 minutes</p>
+                            <p style="color: var(--coffee-brown); font-weight: bold; margin-top: 10px;">FREE</p>
+                        </div>
+                        <div class="delivery-option glass-card" id="deliveryOption" onclick="selectDelivery('delivery')">
+                            <div class="feature-icon">🚚</div>
+                            <h3>Delivery</h3>
+                            <p>Delivered to your door</p>
+                            <p style="color: var(--coffee-brown); font-weight: bold; margin-top: 10px;">$3.99</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Form -->
+                <div class="order-form glass-card">
+                    <h2 style="color: var(--coffee-brown); margin-bottom: 20px;">Your Details</h2>
+                    <form onsubmit="handleOrderSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" class="glass-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" class="glass-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" class="glass-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" class="glass-input" required>
+                        </div>
+
+                        <!-- Pickup Time (shown when pickup selected) -->
+                        <div class="form-group" id="pickupTime">
+                            <label for="pickupTimeSelect">Pickup Time *</label>
+                            <select id="pickupTimeSelect" class="glass-input">
+                                <option value="">Select time...</option>
+                                <option value="asap">As soon as possible</option>
+                                <option value="30min">In 30 minutes</option>
+                                <option value="1hour">In 1 hour</option>
+                                <option value="2hours">In 2 hours</option>
+                            </select>
+                        </div>
+
+                        <!-- Delivery Address (shown when delivery selected) -->
+                        <div class="form-group" id="deliveryAddress" style="display: none;">
+                            <label for="address">Delivery Address *</label>
+                            <textarea id="address" class="glass-input" placeholder="Enter your full address..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Special Instructions</label>
+                            <textarea id="notes" class="glass-input" placeholder="Any special requests or allergies..."></textarea>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="form-group">
+                            <label>Payment Method *</label>
+                            <div class="payment-methods">
+                                <div class="payment-method glass-card selected" id="cardPayment" onclick="selectPayment('card')">
+                                    <div style="font-size: 32px; margin-bottom: 10px;">💳</div>
+                                    <p>Credit/Debit Card</p>
+                                </div>
+                                <div class="payment-method glass-card" id="cashPayment" onclick="selectPayment('cash')">
+                                    <div style="font-size: 32px; margin-bottom: 10px;">💵</div>
+                                    <p>Cash on Delivery</p>
+                                </div>
+                                <div class="payment-method glass-card" id="digitalPayment" onclick="selectPayment('digital')">
+                                    <div style="font-size: 32px; margin-bottom: 10px;">📱</div>
+                                    <p>Digital Wallet</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="glass-button primary" style="width: 100%; margin-top: 20px; padding: 15px;">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="text-align: center; color: var(--text-light); padding: 40px;">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <a href="order.html" class="glass-button primary" style="width: 100%; display: block; text-align: center; text-decoration: none;">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lidiya Cafe</h3>
+                    <p>Serving happiness one cup at a time since 2020.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📱</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li>📍 123 Coffee Street, City</li>
+                        <li>📞 (555) 123-4567</li>
+                        <li>✉️ info@lidiyacafe.com</li>
+                        <li>🕐 Mon-Sun: 7AM - 9PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lidiya Cafe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/order.js"></script>
+    <script>
+        // Display order summary on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = JSON.parse(localStorage.getItem('lidiyaCart')) || [];
+            const orderSummary = document.getElementById('orderSummary');
+            const orderTotal = document.getElementById('orderTotal');
+            
+            if (cart.length === 0) {
+                orderSummary.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px;">Your cart is empty. <a href="menu.html" style="color: var(--coffee-brown);">Add items from our menu</a></p>';
+                orderTotal.textContent = '$0.00';
+            } else {
+                let total = 0;
+                orderSummary.innerHTML = cart.map(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    return `
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--glass-border);">
+                            <div>
+                                <strong>${item.name}</strong> x ${item.quantity}
+                            </div>
+                            <div style="color: var(--coffee-brown); font-weight: bold;">
+                                $${itemTotal.toFixed(2)}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                orderTotal.textContent = `$${total.toFixed(2)}`;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lidiya Cafe - Contact Us</title>
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="container">
+            <div class="navbar">
+                <a href="index.html" class="logo">☕ Lidiya Cafe</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                    <li><a href="order.html">Order</a></li>
+                </ul>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Header -->
+    <section class="section">
+        <div class="container">
+            <h1 class="text-center mb-40" style="color: var(--coffee-dark); font-size: 48px;">Get In Touch</h1>
+            <p class="text-center mb-40" style="font-size: 18px; color: var(--text-light);">We'd love to hear from you! Reach out with questions, feedback, or just to say hello.</p>
+            
+            <div class="contact-grid">
+                <!-- Contact Info -->
+                <div class="contact-info glass-card">
+                    <h3>Contact Information</h3>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div>
+                            <h4 style="color: var(--coffee-brown); margin-bottom: 5px;">Address</h4>
+                            <p>123 Coffee Street<br>Downtown District<br>City, State 12345</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div>
+                            <h4 style="color: var(--coffee-brown); margin-bottom: 5px;">Phone</h4>
+                            <p>(555) 123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">✉️</div>
+                        <div>
+                            <h4 style="color: var(--coffee-brown); margin-bottom: 5px;">Email</h4>
+                            <p>info@lidiyacafe.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">🕐</div>
+                        <div>
+                            <h4 style="color: var(--coffee-brown); margin-bottom: 5px;">Hours</h4>
+                            <p>Monday - Friday: 7:00 AM - 9:00 PM<br>Saturday - Sunday: 8:00 AM - 10:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <h4 style="color: var(--coffee-brown); margin-bottom: 15px;">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link">📘</a>
+                            <a href="#" class="social-link">📸</a>
+                            <a href="#" class="social-link">🐦</a>
+                            <a href="#" class="social-link">📱</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="contact-form glass-card">
+                    <h3 style="color: var(--coffee-brown); margin-bottom: 20px;">Send Us a Message</h3>
+                    <form onsubmit="handleContactSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" class="glass-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="glass-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="glass-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="glass-input" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="glass-button primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section (Placeholder) -->
+    <section class="section" style="background: rgba(255, 255, 255, 0.2);">
+        <div class="container">
+            <h2 class="text-center mb-40" style="color: var(--coffee-dark); font-size: 36px;">Find Us</h2>
+            <div class="glass-card" style="padding: 40px; text-align: center;">
+                <p style="font-size: 18px; margin-bottom: 20px;">📍 123 Coffee Street, Downtown District</p>
+                <div style="background: rgba(255, 255, 255, 0.3); height: 300px; border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                    <p style="color: var(--text-light);">[Map Integration Placeholder]<br>Add Google Maps or similar here</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="text-align: center; color: var(--text-light); padding: 40px;">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <a href="order.html" class="glass-button primary" style="width: 100%; display: block; text-align: center; text-decoration: none;">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lidiya Cafe</h3>
+                    <p>Serving happiness one cup at a time since 2020.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📱</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li>📍 123 Coffee Street, City</li>
+                        <li>📞 (555) 123-4567</li>
+                        <li>✉️ info@lidiyacafe.com</li>
+                        <li>🕐 Mon-Sun: 7AM - 9PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Lidiya Cafe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
