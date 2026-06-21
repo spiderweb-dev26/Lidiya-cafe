@@ -12,7 +12,7 @@
     <nav class="glass-nav">
         <div class="container">
             <div class="navbar">
-                <a href="index.html" class="logo">☕ Lidiya Cafe</a>
+                <a href="index.html" class="logo"> Lidiya Cafe</a>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="menu.html">Menu</a></li>
@@ -53,7 +53,7 @@
                     <h2 style="color: var(--coffee-brown); margin-bottom: 20px;">Delivery Method</h2>
                     <div class="delivery-options">
                         <div class="delivery-option glass-card selected" id="pickupOption" onclick="selectDelivery('pickup')">
-                            <div class="feature-icon">🏪</div>
+                            <div class="feature-icon"></div>
                             <h3>Pickup</h3>
                             <p>Ready in 15-20 minutes</p>
                             <p style="color: var(--coffee-brown); font-weight: bold; margin-top: 10px;">FREE</p>
@@ -124,7 +124,7 @@
                                     <p>Credit/Debit Card</p>
                                 </div>
                                 <div class="payment-method glass-card" id="cashPayment" onclick="selectPayment('cash')">
-                                    <div style="font-size: 32px; margin-bottom: 10px;">💵</div>
+                                    <div style="font-size: 32px; margin-bottom: 10px;"></div>
                                     <p>Cash on Delivery</p>
                                 </div>
                                 <div class="payment-method glass-card" id="digitalPayment" onclick="selectPayment('digital')">
@@ -159,6 +159,31 @@
         </div>
     </div>
 
+    <!-- NEW: Order Confirmation Modal -->
+    <div id="orderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(44, 24, 16, 0.6); backdrop-filter: blur(8px); z-index: 5000; align-items: center; justify-content: center;">
+        <div class="glass-card" style="max-width: 450px; width: 90%; padding: 40px; text-align: center; position: relative; animation: fadeIn 0.3s ease;">
+            <button onclick="closeOrderModal()" style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-light);">×</button>
+            
+            <div style="font-size: 48px; margin-bottom: 15px;">✅</div>
+            <h2 style="color: var(--coffee-dark); margin-bottom: 10px;">Order Placed!</h2>
+            <p style="color: var(--text-light); margin-bottom: 30px;">How would you like to receive your receipt?</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <button onclick="sendWhatsApp()" class="glass-button primary" style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px;">
+                    <span style="font-size: 20px;">💬</span> Send via WhatsApp
+                </button>
+                
+                <button onclick="sendSMS()" class="glass-button" style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px;">
+                    <span style="font-size: 20px;"></span> Send via Messages (SMS)
+                </button>
+                
+                <button onclick="finalizeOrderProcess()" class="glass-button" style="padding: 12px; font-size: 14px; opacity: 0.7;">
+                    Skip & Return Home
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -170,7 +195,7 @@
                         <a href="#" class="social-link">📘</a>
                         <a href="#" class="social-link">📸</a>
                         <a href="#" class="social-link">🐦</a>
-                        <a href="#" class="social-link">📱</a>
+                        <a href="#" class="social-link"></a>
                     </div>
                 </div>
                 <div class="footer-section">
