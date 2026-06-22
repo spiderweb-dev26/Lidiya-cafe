@@ -88,7 +88,7 @@ function handleOrderSubmit(event) {
     }
 }
 
-// Connect to Codespaces backend
+// Connect to Render backend
 async function payWithChapa(orderData) {
     const submitBtn = document.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
@@ -134,37 +134,43 @@ async function payWithChapa(orderData) {
 
 // Action: Automatically Send via SMS
 function sendSMS() {
-    const phoneNumber = "0983064449"; // Your specific number
+    const phoneNumber = "0983064449"; 
     const baseText = localStorage.getItem('lidiyaPendingMessage') || getFormattedOrderText();
     
     // Clean up the text format for standard SMS
     const rawText = baseText.replace(/%0A/g, '\n').replace(/\*/g, '');
     
-    // Trigger the SMS app with the number and message
+    // Trigger the SMS app
     window.location.href = `sms:${phoneNumber}?body=${encodeURIComponent(rawText)}`;
     
-    finalizeOrderProcess();
+    // Do NOT clear the cart immediately. Give the phone 3 full seconds to switch 
+    // to the Messages app before the browser goes back to the home page.
+    setTimeout(finalizeOrderProcess, 3000);
 }
 
 // Cleanup & Redirect
 function finalizeOrderProcess() {
     localStorage.removeItem('lidiyaCart');
     localStorage.removeItem('lidiyaPendingMessage');
-    
-    // Increased delay slightly to give the phone time to switch to the SMS app
-    setTimeout(() => {
-        window.location.href = 'index.html';
-    }, 1500);
+    window.location.href = 'index.html';
 }
 
-// Catch successful returns from Chapa to trigger the SMS automatically
+// Catch successful returns from Chapa to trigger the SMS
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     
     if (urlParams.get('status') === 'success') {
-        // Wait just a brief moment to ensure the page has loaded, then fire SMS
+        // Wait half a second so the page is fully visible
         setTimeout(() => {
-            sendSMS();
+            // The browser REQUIRES a physical screen tap to open another app. 
+            // This confirm box provides that required interaction.
+            const userTapped = confirm("Payment Successful! ✅\n\nClick OK to send your order receipt to our kitchen.");
+            
+            if (userTapped) {
+                sendSMS(); // Opens the text app
+            } else {
+                finalizeOrderProcess(); // If they hit cancel, just clean up
+            }
         }, 500);
     }
 });
