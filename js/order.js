@@ -99,7 +99,7 @@ async function payWithChapa(orderData) {
 
         const nameParts = orderData.name.split(' ');
 
-        const response = await fetch('https://lidiya-payment-server.onrender.com/', {
+        const response = await fetch('https://lidiya-payment-server.onrender.com/api/initialize-payment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
